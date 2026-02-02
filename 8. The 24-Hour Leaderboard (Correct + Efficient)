@@ -1,0 +1,13 @@
+from django.utils import timezone
+from datetime import timedelta
+from django.db.models import Sum
+
+since = timezone.now() - timedelta(hours=24)
+
+leaders = (
+    KarmaEvent.objects
+    .filter(created_at__gte=since)
+    .values("user__id", "user__username")
+    .annotate(total_karma=Sum("points"))
+    .order_by("-total_karma")[:5]
+)
