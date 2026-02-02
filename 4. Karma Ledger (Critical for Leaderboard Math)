@@ -1,0 +1,7 @@
+class KarmaEvent(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    points = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    source_type = models.CharField(max_length=20)  
+    source_id = models.IntegerField()
