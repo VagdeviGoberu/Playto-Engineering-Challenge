@@ -1,0 +1,3 @@
+comments = Comment.objects.filter(post=post)\
+    .select_related("author")\
+    .prefetch_related("children")
