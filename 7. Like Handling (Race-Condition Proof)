@@ -1,0 +1,22 @@
+from django.db import transaction, IntegrityError
+
+@api_view(["POST"])
+def like_post(request, post_id):
+    try:
+        with transaction.atomic():
+            like = PostLike.objects.create(
+                user=request.user,
+                post_id=post_id
+            )
+
+            KarmaEvent.objects.create(
+                user=request.user,
+                points=5,
+                source_type="post",
+                source_id=post_id
+            )
+
+    except IntegrityError:
+        return Response({"detail": "Already liked"}, status=400)
+
+    return Response({"status": "ok"})
