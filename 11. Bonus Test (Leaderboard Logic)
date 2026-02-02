@@ -1,0 +1,9 @@
+def test_24h_leaderboard():
+    user = User.objects.create(username="alice")
+
+    KarmaEvent.objects.create(user=user, points=5)
+    KarmaEvent.objects.create(user=user, points=1)
+
+    leaders = get_leaderboard()
+
+    assert leaders[0]["total_karma"] == 6
