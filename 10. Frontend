@@ -1,0 +1,12 @@
+function Comment({ comment }) {
+  return (
+    <div className="ml-4 border-l pl-2">
+      <p>{comment.author.username}</p>
+      <p>{comment.body}</p>
+
+      {comment.children.map(child => (
+        <Comment key={child.id} comment={child} />
+      ))}
+    </div>
+  )
+}
